@@ -1,47 +1,78 @@
-$(document).ready(function() {
+$(function() {
 
-    var cats = ["kittykat", "littlecat", "peekingcat", "scardycat", "smilelycat"];
+            var model = {
+                currentCat: 0,
+                cats: [{
+                    "name": "kittykat",
+                    "image": "images/kittykat.jpg"
+                }, {
+                    "name": "littlecat",
+                    "image": "images/littlecat.jpg"
+                }, {
+                    "name": "peekingcat",
+                    "image": "images/peekingcat.jpg"
+                }, {
+                    "name": "scardycat",
+                    "image": "images/scardycat.jpg"
+                }, {
+                    "name": "smilelycat",
+                    "image": "images/smilelycat.jpg"
+                }],
 
-    $.each(cats, function(i) {
-        $('#catList').append(
-            $('<button>')
-            .addClass('btn btn-warning btn-lg btn-block')
-            .attr('id', cats[i])
-            .text(cats[i]));
-    });
-
-
-
-        $('#kittykat').click(function() {
-        	$('img').attr('src' , 'images/kittykat.jpg')
-
-        	$('img').attr('id', 'kitty')
-        });
-
-        $('#littlecat').click(function() {
-        	$('img').attr('src', 'images/littlecat.jpg')
-
-        	$('img').attr('id', 'little')
-        });
-
-        $('#peekingcat').click(function() {
-        	$('img').attr('src', 'images/peekingcat.jpg')
-
-        	$('img').attr('id', 'peeking')
-        });
-
-        $('#scardycat').click(function() {
-        	$('img').attr('src', 'images/scardycat.jpg')
-
-        	$('img').attr('id', 'scardy')
-        });
-
-        $('#smilelycat').click(function() {
-        	$('img').attr('src', 'images/smilelycat.jpg')
-
-        	$('img').attr('id', 'smilely')
-        });
+                init: function() {
+                    for (i = 0; i < model.cats.length; i++) {
+                        model.cats[i].number = i;
+                        model.cats[i].display = 'none';
+                        model.cats[i].clicks = 0;
+                    }
+                }
+            };
 
 
+            var controller = {
 
-});
+                getCats: function() {
+                    return model.cats;
+
+                },
+
+                getCurrentCat: function() {
+                    return model.currentCat;
+                },
+
+                setCurrentCat: function(currentCat) {
+                    model.currentCat = currentCat;
+                },
+
+
+                init: function() {
+                    model.init();
+                    view1.init();
+                    //view2.init();
+                }
+            };
+
+            var view1 = {
+
+                init: function() {
+                    this.render();
+                },
+
+                render: function() {
+                    var cats = controller.getCats();
+
+
+                    $('#photos').hide();
+
+                    for (i = 0; i < cats.length; i++) {
+                        $('#catList').append('<button class="btn btn-lg btn-warning btn-block" id="cat' + i + 'href="#">' + cats[i].name + '</button>');
+                    }
+                }
+
+            };
+
+
+
+
+                    controller.init();
+                });
