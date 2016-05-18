@@ -47,12 +47,12 @@ $(function() {
 
                 init: function() {
                     model.init();
-                    view1.init();
-                    //view2.init();
+                    listView.init();
+                    photoView.init();
                 }
             };
 
-            var view1 = {
+            var listView = {
 
                 init: function() {
                     this.render();
@@ -62,14 +62,39 @@ $(function() {
                     var cats = controller.getCats();
 
 
-                    $('#photos').hide();
-
                     for (i = 0; i < cats.length; i++) {
-                        $('#catList').append('<button class="btn btn-lg btn-warning btn-block" id="cat' + i + 'href="#">' + cats[i].name + '</button>');
+                        $('#catList').append('<button class="btn btn-lg btn-warning btn-block" id="cat' + i + '"href="#">' + cats[i].name + '</button>');
                     }
                 }
 
             };
+
+            var photoView = {
+                init: function() {
+                    this.render();
+                },
+
+                render: function() {
+
+                    var cats = controller.getCats();
+                    var currentCat = controller.getCurrentCat();
+                    $('#photos').hide();
+
+
+                    for (var i = 0; i < cats.length; i++) {
+                        $('#cat' + i).on('click', (function(catCopy) {
+                            return function() {
+                                $('#photos').show();
+                                $('#cat-photo').attr({
+                                    src: catCopy.image
+                                });
+
+                                $('#cat-name').text(catCopy.name);
+                            }
+                        })(cats[i]));
+                    }
+                }
+            }
 
 
 
